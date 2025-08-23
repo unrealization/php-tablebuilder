@@ -4,14 +4,10 @@ declare(strict_types=1);
 namespace unrealization\TableIndexes;
 
 use unrealization\TableColumns\GenericColumn;
+use unrealization\TableColumns\IntegerColumn;
 
-class GenericIndex
+abstract class GenericIndex
 {
-	public const FULLTEXT = 'FULLTEXT';
-	public const INDEX = 'INDEX';
-	public const PRIMARY = 'PRIMARY KEY';
-	public const UNIQUE = 'UNIQUE KEY';
-
 	private string $name;
 	private string $type;
 	private array $columns;
@@ -20,7 +16,7 @@ class GenericIndex
 	{
 		$columns = $this->validateColumns($columns);
 
-		if ($type === self::PRIMARY)
+		if ($type === 'PRIMARY KEY')
 		{
 			$this->name = 'PRIMARY';
 		}
@@ -64,7 +60,7 @@ class GenericIndex
 			}
 			elseif (is_string($columns[$index]))
 			{
-				$columns[$index] = new GenericColumn($columns[$index], '');
+				$columns[$index] = new IntegerColumn($columns[$index]);
 			}
 			else
 			{
@@ -86,7 +82,7 @@ class GenericIndex
 
 		$sql = $this->type;
 
-		if ($this->type !== self::PRIMARY)
+		if ($this->type !== 'PRIMARY KEY')
 		{
 			$sql .= ' `'.$this->name.'`';
 		}

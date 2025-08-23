@@ -7,11 +7,16 @@ class VarCharColumn extends GenericColumn
 {
 	public function __construct(string $name, int $size, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF)
 	{
-		parent::__construct($name, self::VARCHAR);
+		parent::__construct($name, 'VARCHAR');
 		$this->setSize($size);
 		$this->setNullable($nullable);
 		$this->setCharacterSet($characterSet);
 		$this->setCollation($collation);
 		$this->setDefault($default);
+	}
+
+	protected function convertDefaultValue($default): int|float|string
+	{
+		return '\''.$default.'\'';
 	}
 }

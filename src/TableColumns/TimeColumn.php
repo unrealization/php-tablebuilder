@@ -7,7 +7,7 @@ class TimeColumn extends GenericColumn
 {
 	public function __construct(string $name, bool $nullable = false, $default = -INF)
 	{
-		parent::__construct($name, self::TIME);
+		parent::__construct($name, 'TIME');
 		$this->setNullable($nullable);
 		$this->setDefault($default);
 	}

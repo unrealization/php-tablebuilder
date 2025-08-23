@@ -20,7 +20,7 @@ trait Indexes
 	{
 		if (!($index instanceof GenericIndex))
 		{
-			$index = new GenericIndex('', array(), $index);
+			$index = new Index(array(), $index);
 		}
 
 		return $this->addIndex(new IndexAction($index, IndexAction::MODE_DROP));

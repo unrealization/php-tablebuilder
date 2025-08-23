@@ -7,7 +7,7 @@ class TimeStampColumn extends GenericColumn
 {
 	public function __construct(string $name, bool $nullable = false, $default = -INF)
 	{
-		parent::__construct($name, self::TIMESTAMP);
+		parent::__construct($name, 'TIMESTAMP');
 		$this->setNullable($nullable);
 		$this->setDefault($default);
 	}

@@ -25,7 +25,7 @@ trait Columns
 	{
 		if (!($column instanceof GenericColumn))
 		{
-			$column = new GenericColumn($column, '');
+			$column = new IntegerColumn($column);
 		}
 
 		return $this->addColumn(new ColumnAction($column, ColumnAction::MODE_DROP));

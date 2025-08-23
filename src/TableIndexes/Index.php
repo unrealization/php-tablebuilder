@@ -9,6 +9,6 @@ class Index extends GenericIndex
 {
 	public function __construct(array|GenericColumn|string $columns, ?string $name = null)
 	{
-		parent::__construct(self::INDEX, $columns, $name);
+		parent::__construct('INDEX', $columns, $name);
 	}
 }

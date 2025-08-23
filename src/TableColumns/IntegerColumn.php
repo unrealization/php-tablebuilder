@@ -7,7 +7,7 @@ class IntegerColumn extends GenericColumn
 {
 	public function __construct(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF)
 	{
-		parent::__construct($name, self::INT);
+		parent::__construct($name, 'INT');
 		$this->setUnsigned($unsigned);
 		$this->setNullable($nullable);
 		$this->setAutoIncrement($autoIncrement);

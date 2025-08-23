@@ -9,6 +9,6 @@ class UniqueKey extends GenericIndex
 {
 	public function __construct(array|GenericColumn|string $columns, ?string $name = null)
 	{
-		parent::__construct(self::UNIQUE, $columns, $name);
+		parent::__construct('UNIQUE KEY', $columns, $name);
 	}
 }

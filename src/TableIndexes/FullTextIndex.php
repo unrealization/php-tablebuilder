@@ -9,6 +9,6 @@ class FullTextIndex extends GenericIndex
 {
 	public function __construct(array|GenericColumn|string $columns, ?string $name = null)
 	{
-		parent::__construct(self::FULLTEXT, $columns, $name);
+		parent::__construct('FULLTEXT', $columns, $name);
 	}
 }

@@ -7,7 +7,7 @@ class BigIntegerColumn extends GenericColumn
 {
 	public function __construct(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF)
 	{
-		parent::__construct($name, self::BIGINT);
+		parent::__construct($name, 'BIGINT');
 		$this->setUnsigned($unsigned);
 		$this->setNullable($nullable);
 		$this->setAutoIncrement($autoIncrement);

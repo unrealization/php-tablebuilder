@@ -9,6 +9,6 @@ class PrimaryKey extends GenericIndex
 {
 	public function __construct(array|GenericColumn|string $columns)
 	{
-		parent::__construct(self::PRIMARY, $columns);
+		parent::__construct('PRIMARY KEY', $columns);
 	}
 }

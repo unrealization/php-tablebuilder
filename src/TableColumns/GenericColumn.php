@@ -3,19 +3,8 @@ declare(strict_types=1);
 
 namespace unrealization\TableColumns;
 
-class GenericColumn
+abstract class GenericColumn
 {
-	public const BIGINT = 'BIGINT';
-	public const DATE = 'DATE';
-	public const DATETIME = 'DATETIME';
-	public const DECIMAL = 'DECIMAL';
-	public const FLOAT = 'FLOAT';
-	public const INT = 'INT';
-	public const TEXT = 'TEXT';
-	public const TIME = 'TIME';
-	public const TIMESTAMP = 'TIMESTAMP';
-	public const VARCHAR = 'VARCHAR';
-
 	private string $name;
 	private string $type;
 	private ?int $size = null;
@@ -26,6 +15,8 @@ class GenericColumn
 	private ?string $characterSet = null;
 	private ?string $collation = null;
 	private $default = -INF;
+
+	abstract protected function convertDefaultValue($default): int|float|string;
 
 	public function __construct(string $name, string $type)
 	{
@@ -64,6 +55,16 @@ class GenericColumn
 			$sql .= ' AUTO_INCREMENT';
 		}
 
+		if (!is_null($this->characterSet))
+		{
+			$sql .= ' CHARACTER SET '.$this->characterSet;
+		}
+
+		if (!is_null($this->collation))
+		{
+			$sql .= ' COLLATE '.$this->collation;
+		}
+
 		if ($this->default !== -INF)
 		{
 			$sql .= ' DEFAULT ';
@@ -86,49 +87,49 @@ class GenericColumn
 		return $this->name;
 	}
 
-	final public function setSize(?int $size): static
+	final protected function setSize(?int $size): static
 	{
 		$this->size = $size;
 		return $this;
 	}
 
-	final public function setPrecision(?int $precision): static
+	final protected function setPrecision(?int $precision): static
 	{
 		$this->precision = $precision;
 		return $this;
 	}
 
-	final public function setUnsigned(bool $unsigned): static
+	final protected function setUnsigned(bool $unsigned): static
 	{
 		$this->unsigned = $unsigned;
 		return $this;
 	}
 
-	final public function setNullable(bool $nullable): static
+	final protected function setNullable(bool $nullable): static
 	{
 		$this->nullable = $nullable;
 		return $this;
 	}
 
-	final public function setAutoIncrement(bool $autoIncrement): static
+	final protected function setAutoIncrement(bool $autoIncrement): static
 	{
 		$this->autoIncrement = $autoIncrement;
 		return $this;
 	}
 
-	final public function setCharacterSet(?string $characterSet): static
+	final protected function setCharacterSet(?string $characterSet): static
 	{
 		$this->characterSet = $characterSet;
 		return $this;
 	}
 
-	final public function setCollation(?string $collation): static
+	final protected function setCollation(?string $collation): static
 	{
 		$this->collation = $collation;
 		return $this;
 	}
 
-	final public function setDefault($default = -INF): static
+	final protected function setDefault($default = -INF): static
 	{
 		if (($default === -INF) || ($default === INF))
 		{
@@ -156,10 +157,5 @@ class GenericColumn
 		}
 
 		return $value;
-	}
-
-	protected function convertDefaultValue($default): int|float|string
-	{
-		return '\''.$default.'\'';
 	}
 }

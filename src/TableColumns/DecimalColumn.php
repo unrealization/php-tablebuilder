@@ -7,7 +7,7 @@ class DecimalColumn extends GenericColumn
 {
 	public function __construct(string $name, ?int $size = null, ?int $precision = null, bool $unsigned = false, bool $nullable = false, $default = -INF)
 	{
-		parent::__construct($name, self::DECIMAL);
+		parent::__construct($name, 'DECIMAL');
 		$this->setSize($size);
 		$this->setPrecision($precision);
 		$this->setUnsigned($unsigned);
