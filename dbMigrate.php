@@ -154,7 +154,7 @@ function runMigrations(string $migrationDirectory): void
 			continue;
 		}
 
-		error_log('Running migraton '.$migrationClass);
+		error_log('Running migration '.$migrationClass);
 		$success = Migration::migrate($migrationClass, $dbConnection, $migrationClass::migrate());
 
 		if ($success)
@@ -308,7 +308,7 @@ switch ($command)
 
 		if (!empty($argv[3]))
 		{
-			$migrationDirectory = $argv[2];
+			$migrationDirectory = $argv[3];
 		}
 
 		initMigrations($migrationTable, $migrationDirectory);
