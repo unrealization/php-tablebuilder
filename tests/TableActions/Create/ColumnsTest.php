@@ -78,6 +78,22 @@ class CreateColumnsTest extends TestCase
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\DoubleColumn
+	 */
+	public function testDouble()
+	{
+		$table = TableBuilder::create('test')->double('test', false, false, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` DOUBLE NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
 	 * @uses unrealization\TableColumns\FloatColumn
 	 */
 	public function testFloat()
@@ -101,6 +117,38 @@ class CreateColumnsTest extends TestCase
 		$table = TableBuilder::create('test')->int('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` INT NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\MediumIntColumn
+	 */
+	public function testMediumint()
+	{
+		$table = TableBuilder::create('test')->mediumint('test', false, false, false, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMINT NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\SmallIntColumn
+	 */
+	public function testSmallint()
+	{
+		$table = TableBuilder::create('test')->smallint('test', false, false, false, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` SMALLINT NOT NULL);', $table->getQuery());
 	}
 
 	/**
@@ -149,6 +197,22 @@ class CreateColumnsTest extends TestCase
 		$table = TableBuilder::create('test')->timestamp('test', false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TIMESTAMP NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\TinyIntColumn
+	 */
+	public function testTinyint()
+	{
+		$table = TableBuilder::create('test')->tinyint('test', false, false, false, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TINYINT NOT NULL);', $table->getQuery());
 	}
 
 	/**
