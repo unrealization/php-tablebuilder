@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace unrealization\TableColumns;
 
-class IntegerColumn extends GenericColumn
+class BigIntColumn extends GenericColumn
 {
 	public function __construct(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF)
 	{
-		parent::__construct($name, 'INT');
+		parent::__construct($name, 'BIGINT');
 		$this->setUnsigned($unsigned);
 		$this->setNullable($nullable);
 		$this->setAutoIncrement($autoIncrement);

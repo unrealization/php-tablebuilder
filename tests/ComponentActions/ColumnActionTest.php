@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use unrealization\TableColumns\IntegerColumn;
+use unrealization\TableColumns\IntColumn;
 use unrealization\ComponentActions\ColumnAction;
 use unrealization\TableColumns\GenericColumn;
 
@@ -11,23 +11,23 @@ class ColumnActionTest extends TestCase
 	/**
 	 * @covers unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableColumns\GenericColumn
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 */
 	public function testColumnAction()
 	{
-		$column = new IntegerColumn('test');
+		$column = new IntColumn('test');
 
 		$columnAction = new ColumnAction($column, ColumnAction::MODE_ALTER);
 		$this->assertInstanceOf(ColumnAction::class, $columnAction);
 		$this->assertSame('test', $columnAction->getName());
 		$this->assertSame('ADD COLUMN `test` INT NOT NULL', $columnAction->getQuerySnippet());
-		$columnAction->setPosition(ColumnAction::POSITION_AFTER, new IntegerColumn('id'));
+		$columnAction->setPosition(ColumnAction::POSITION_AFTER, new IntColumn('id'));
 		$this->assertSame('ADD COLUMN `test` INT NOT NULL AFTER `id`', $columnAction->getQuerySnippet());
 		$columnAction->setPosition(ColumnAction::POSITION_AFTER, 'id');
 		$this->assertSame('ADD COLUMN `test` INT NOT NULL AFTER `id`', $columnAction->getQuerySnippet());
 		$columnAction->setPosition(ColumnAction::POSITION_FIRST);
 		$this->assertSame('ADD COLUMN `test` INT NOT NULL FIRST', $columnAction->getQuerySnippet());
-		$columnAction->changeFrom(new IntegerColumn('test2'));
+		$columnAction->changeFrom(new IntColumn('test2'));
 		$this->assertSame('CHANGE COLUMN `test2` `test` INT NOT NULL FIRST', $columnAction->getQuerySnippet());
 		$columnAction->changeFrom('test2');
 		$this->assertSame('CHANGE COLUMN `test2` `test` INT NOT NULL FIRST', $columnAction->getQuerySnippet());
@@ -50,11 +50,11 @@ class ColumnActionTest extends TestCase
 	/**
 	 * @covers unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableColumns\GenericColumn
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 */
 	public function testCreate()
 	{
-		$columnAction = ColumnAction::create(IntegerColumn::class, ColumnAction::MODE_CREATE, 'test', true, autoIncrement: true);
+		$columnAction = ColumnAction::create(IntColumn::class, ColumnAction::MODE_CREATE, 'test', true, autoIncrement: true);
 		$this->assertInstanceOf(ColumnAction::class, $columnAction);
 		$this->assertSame('test', $columnAction->getName());
 		$this->assertSame('`test` INT UNSIGNED NOT NULL AUTO_INCREMENT', $columnAction->getQuerySnippet());

@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 use unrealization\TableBuilder;
 use unrealization\TableActions\CreateTable;
 use unrealization\TableColumns\GenericColumn;
-use unrealization\TableColumns\IntegerColumn;
+use unrealization\TableColumns\IntColumn;
 
 class CreateIndexesTest extends TestCase
 {
@@ -15,7 +15,7 @@ class CreateIndexesTest extends TestCase
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableIndexes\GenericIndex
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableActions\CreateTable
@@ -29,11 +29,11 @@ class CreateIndexesTest extends TestCase
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,FULLTEXT `FULLTEXT_test` (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->fullTextIndex(new IntegerColumn('test'), null);
+		$table = TableBuilder::create('test')->varchar('test', 32)->fullTextIndex(new IntColumn('test'), null);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,FULLTEXT `FULLTEXT_test` (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->fullTextIndex(array('test1', new IntegerColumn('test2')), null);
+		$table = TableBuilder::create('test')->varchar('test', 32)->fullTextIndex(array('test1', new IntColumn('test2')), null);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,FULLTEXT `FULLTEXT_test1_test2` (`test1`,`test2`));', $table->getQuery());
 
@@ -48,7 +48,7 @@ class CreateIndexesTest extends TestCase
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableIndexes\GenericIndex
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableActions\CreateTable
@@ -62,11 +62,11 @@ class CreateIndexesTest extends TestCase
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,INDEX `INDEX_test` (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->index(new IntegerColumn('test'), null);
+		$table = TableBuilder::create('test')->varchar('test', 32)->index(new IntColumn('test'), null);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,INDEX `INDEX_test` (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->index(array('test1', new IntegerColumn('test2')), null);
+		$table = TableBuilder::create('test')->varchar('test', 32)->index(array('test1', new IntColumn('test2')), null);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,INDEX `INDEX_test1_test2` (`test1`,`test2`));', $table->getQuery());
 
@@ -81,7 +81,7 @@ class CreateIndexesTest extends TestCase
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableIndexes\GenericIndex
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableActions\CreateTable
@@ -95,11 +95,11 @@ class CreateIndexesTest extends TestCase
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,PRIMARY KEY (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->primaryKey(new IntegerColumn('test'));
+		$table = TableBuilder::create('test')->varchar('test', 32)->primaryKey(new IntColumn('test'));
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,PRIMARY KEY (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->primaryKey(array('test1', new IntegerColumn('test2')));
+		$table = TableBuilder::create('test')->varchar('test', 32)->primaryKey(array('test1', new IntColumn('test2')));
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,PRIMARY KEY (`test1`,`test2`));', $table->getQuery());
 	}
@@ -110,7 +110,7 @@ class CreateIndexesTest extends TestCase
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableIndexes\GenericIndex
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableActions\CreateTable
@@ -124,11 +124,11 @@ class CreateIndexesTest extends TestCase
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,UNIQUE KEY `UNIQUE_KEY_test` (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->uniqueKey(new IntegerColumn('test'), null);
+		$table = TableBuilder::create('test')->varchar('test', 32)->uniqueKey(new IntColumn('test'), null);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,UNIQUE KEY `UNIQUE_KEY_test` (`test`));', $table->getQuery());
 
-		$table = TableBuilder::create('test')->varchar('test', 32)->uniqueKey(array('test1', new IntegerColumn('test2')), null);
+		$table = TableBuilder::create('test')->varchar('test', 32)->uniqueKey(array('test1', new IntColumn('test2')), null);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL,UNIQUE KEY `UNIQUE_KEY_test1_test2` (`test1`,`test2`));', $table->getQuery());
 

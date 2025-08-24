@@ -23,7 +23,7 @@ class AlterTableTest extends TestCase
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableActions\TableAction
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableColumns\TextColumn
 	 * @uses unrealization\TableIndexes\FullTextIndex
@@ -44,7 +44,7 @@ class AlterTableTest extends TestCase
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableActions\TableAction
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableColumns\TextColumn
 	 * @uses unrealization\TableIndexes\FullTextIndex

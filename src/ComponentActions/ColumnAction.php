@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace unrealization\ComponentActions;
 
 use unrealization\TableColumns\GenericColumn;
-use unrealization\TableColumns\IntegerColumn;
+use unrealization\TableColumns\IntColumn;
 
 class ColumnAction extends GenericAction
 {
@@ -118,7 +118,7 @@ class ColumnAction extends GenericAction
 			return $this;
 		}
 
-		$this->relativeTo = new IntegerColumn($column);
+		$this->relativeTo = new IntColumn($column);
 		return $this;
 	}
 
@@ -136,7 +136,7 @@ class ColumnAction extends GenericAction
 			return $this;
 		}
 
-		$this->changeFrom = new IntegerColumn($column);
+		$this->changeFrom = new IntColumn($column);
 		return $this;
 	}
 }

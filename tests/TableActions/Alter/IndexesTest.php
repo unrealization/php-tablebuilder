@@ -44,7 +44,7 @@ class AlterIndexesTest extends TestCase
 	 * @uses unrealization\TableActions\TableAction
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableIndexes\GenericIndex
 	 * @uses unrealization\TableActions\AlterTable
@@ -62,7 +62,7 @@ class AlterIndexesTest extends TestCase
 	 * @uses unrealization\TableActions\TableAction
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableIndexes\GenericIndex
 	 * @uses unrealization\TableActions\AlterTable
@@ -80,7 +80,7 @@ class AlterIndexesTest extends TestCase
 	 * @uses unrealization\TableActions\TableAction
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableIndexes\GenericIndex
 	 * @uses unrealization\TableActions\AlterTable
@@ -98,7 +98,7 @@ class AlterIndexesTest extends TestCase
 	 * @uses unrealization\TableActions\TableAction
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableBuilder
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableIndexes\GenericIndex
 	 * @uses unrealization\TableActions\AlterTable

@@ -8,7 +8,7 @@ use unrealization\TableIndexes\GenericIndex;
 use unrealization\ComponentActions\ColumnAction;
 use unrealization\ComponentActions\IndexAction;
 use unrealization\TableActions\CreateTable;
-use unrealization\TableColumns\IntegerColumn;
+use unrealization\TableColumns\IntColumn;
 use unrealization\TableIndexes\Index;
 
 class TableActionTest extends TestCase
@@ -27,12 +27,12 @@ class TableActionTest extends TestCase
 	 * @covers unrealization\TableActions\TableAction
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableBuilder
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 */
 	public function testDuplicateColumnName()
 	{
-		$column = new IntegerColumn('test');
+		$column = new IntColumn('test');
 		$this->expectException(\Exception::class);
 		$table = TableBuilder::create('test')->addColumn($column)->addColumn($column);
 	}
@@ -53,15 +53,15 @@ class TableActionTest extends TestCase
 
 	/**
 	 * @covers unrealization\TableActions\TableAction
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\ComponentActions\ColumnAction
 	 * @uses unrealization\TableBuilder
 	 */
 	public function testAddColumn()
 	{
-		$column = new IntegerColumn('test1');
-		$columnAction = new ColumnAction(new IntegerColumn('test2'));
+		$column = new IntColumn('test1');
+		$columnAction = new ColumnAction(new IntColumn('test2'));
 		$table = TableBuilder::create('test')->addColumn($column)->addColumn($columnAction);
 		$this->assertInstanceOf(CreateTable::class, $table);
 	}

@@ -14,7 +14,7 @@ class CreateColumnsTest extends TestCase
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\CreateTable
-	 * @uses unrealization\TableColumns\BigIntegerColumn
+	 * @uses unrealization\TableColumns\BigIntColumn
 	 */
 	public function testBigint()
 	{
@@ -94,7 +94,7 @@ class CreateColumnsTest extends TestCase
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\CreateTable
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 */
 	public function testInt()
 	{

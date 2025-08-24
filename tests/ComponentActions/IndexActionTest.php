@@ -12,7 +12,7 @@ class IndexActionTest extends TestCase
 	 * @covers unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableIndexes\Index
 	 * @uses unrealization\TableIndexes\GenericIndex
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableIndexes\PrimaryKey
 	 */
@@ -44,7 +44,7 @@ class IndexActionTest extends TestCase
 
 	/**
 	 * @covers unrealization\ComponentActions\IndexAction
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableIndexes\GenericIndex
 	 * @uses unrealization\TableIndexes\Index

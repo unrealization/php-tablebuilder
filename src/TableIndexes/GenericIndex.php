@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace unrealization\TableIndexes;
 
 use unrealization\TableColumns\GenericColumn;
-use unrealization\TableColumns\IntegerColumn;
+use unrealization\TableColumns\IntColumn;
 
 abstract class GenericIndex
 {
@@ -60,7 +60,7 @@ abstract class GenericIndex
 			}
 			elseif (is_string($columns[$index]))
 			{
-				$columns[$index] = new IntegerColumn($columns[$index]);
+				$columns[$index] = new IntColumn($columns[$index]);
 			}
 			else
 			{

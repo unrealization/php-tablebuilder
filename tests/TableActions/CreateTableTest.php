@@ -24,7 +24,7 @@ class CreateTableTest extends TestCase
 	 * @uses unrealization\ComponentActions\IndexAction
 	 * @uses unrealization\TableActions\TableAction
 	 * @uses unrealization\TableColumns\GenericColumn
-	 * @uses unrealization\TableColumns\IntegerColumn
+	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableIndexes\GenericIndex
 	 * @uses unrealization\TableIndexes\PrimaryKey
 	 */

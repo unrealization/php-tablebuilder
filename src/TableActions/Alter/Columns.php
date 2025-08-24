@@ -6,11 +6,11 @@ namespace unrealization\TableActions\Alter;
 use unrealization\ComponentActions\ColumnAction;
 use unrealization\TableColumns\DateColumn;
 use unrealization\TableColumns\GenericColumn;
-use unrealization\TableColumns\BigIntegerColumn;
+use unrealization\TableColumns\BigIntColumn;
 use unrealization\TableColumns\DateTimeColumn;
 use unrealization\TableColumns\DecimalColumn;
 use unrealization\TableColumns\FloatColumn;
-use unrealization\TableColumns\IntegerColumn;
+use unrealization\TableColumns\IntColumn;
 use unrealization\TableColumns\TextColumn;
 use unrealization\TableColumns\VarCharColumn;
 use unrealization\TableActions\TableAction;
@@ -25,7 +25,7 @@ trait Columns
 	{
 		if (!($column instanceof GenericColumn))
 		{
-			$column = new IntegerColumn($column);
+			$column = new IntColumn($column);
 		}
 
 		return $this->addColumn(new ColumnAction($column, ColumnAction::MODE_DROP));
@@ -33,7 +33,7 @@ trait Columns
 
 	public function bigint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
-		return $this->addColumn(ColumnAction::create(BigIntegerColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+		return $this->addColumn(ColumnAction::create(BigIntColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function date(string $name, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
@@ -58,7 +58,7 @@ trait Columns
 
 	public function int(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
-		return $this->addColumn(ColumnAction::create(IntegerColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+		return $this->addColumn(ColumnAction::create(IntColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function text(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
