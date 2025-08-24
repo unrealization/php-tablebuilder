@@ -5,10 +5,9 @@ namespace unrealization\TableColumns;
 
 class FloatColumn extends GenericColumn
 {
-	public function __construct(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF)
+	public function __construct(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF)
 	{
 		parent::__construct($name, 'FLOAT');
-		$this->setSize($size);
 		$this->setUnsigned($unsigned);
 		$this->setNullable($nullable);
 		$this->setDefault($default);

@@ -5,10 +5,9 @@ namespace unrealization\TableColumns;
 
 class DoubleColumn extends GenericColumn
 {
-	public function __construct(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF)
+	public function __construct(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF)
 	{
 		parent::__construct($name, 'DOUBLE');
-		$this->setSize($size);
 		$this->setUnsigned($unsigned);
 		$this->setNullable($nullable);
 		$this->setDefault($default);

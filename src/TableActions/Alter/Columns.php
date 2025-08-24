@@ -55,14 +55,14 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(DecimalColumn::class, ColumnAction::MODE_ALTER, $name, $size, $precision, $unsigned, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
-	public function double(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	public function double(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
-		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_ALTER, $name, $size, $unsigned, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
-	public function float(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	public function float(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
-		return $this->addColumn(ColumnAction::create(FloatColumn::class, ColumnAction::MODE_ALTER, $name, $size, $unsigned, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+		return $this->addColumn(ColumnAction::create(FloatColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function int(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self

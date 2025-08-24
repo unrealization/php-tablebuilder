@@ -45,14 +45,14 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(DecimalColumn::class, ColumnAction::MODE_CREATE, $name, $size, $precision, $unsigned, $nullable, $default));
 	}
 
-	public function double(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF): self
+	public function double(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF): self
 	{
-		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_CREATE, $name, $size, $unsigned, $nullable, $default));
+		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $default));
 	}
 
-	public function float(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF): self
+	public function float(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF): self
 	{
-		return $this->addColumn(ColumnAction::create(FloatColumn::class, ColumnAction::MODE_CREATE, $name, $size, $unsigned, $nullable, $default));
+		return $this->addColumn(ColumnAction::create(FloatColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $default));
 	}
 
 	public function int(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
