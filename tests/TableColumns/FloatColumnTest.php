@@ -17,37 +17,32 @@ class FloatColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT NOT NULL', $column->getQuerySnippet());
 
-		$column = new FloatColumn('test', null, false, false, -INF);
+		$column = new FloatColumn('test', false, false, -INF);
 		$this->assertInstanceOf(FloatColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT NOT NULL', $column->getQuerySnippet());
 
-		$column = new FloatColumn('test', 10, false, false, -INF);
-		$this->assertInstanceOf(FloatColumn::class, $column);
-		$this->assertSame('test', $column->getName());
-		$this->assertSame('`test` FLOAT(10) NOT NULL', $column->getQuerySnippet());
-
-		$column = new FloatColumn('test', null, true, false, -INF);
+		$column = new FloatColumn('test', true, false, -INF);
 		$this->assertInstanceOf(FloatColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT UNSIGNED NOT NULL', $column->getQuerySnippet());
 
-		$column = new FloatColumn('test', null, false, true, -INF);
+		$column = new FloatColumn('test', false, true, -INF);
 		$this->assertInstanceOf(FloatColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT', $column->getQuerySnippet());
 
-		$column = new FloatColumn('test', null, false, false, -7);
+		$column = new FloatColumn('test', false, false, -7);
 		$this->assertInstanceOf(FloatColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT NOT NULL DEFAULT -7', $column->getQuerySnippet());
 
-		$column = new FloatColumn('test', null, false, false, '17.4');
+		$column = new FloatColumn('test', false, false, '17.4');
 		$this->assertInstanceOf(FloatColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT NOT NULL DEFAULT 17.4', $column->getQuerySnippet());
 
 		$this->expectException(\InvalidArgumentException::class);
-		new FloatColumn('test', null, false, false, 'test');
+		new FloatColumn('test', false, false, 'test');
 	}
 }

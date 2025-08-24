@@ -190,27 +190,27 @@ class AlterColumnsTest extends TestCase
 	 */
 	public function testFloat()
 	{
-		$table = TableBuilder::alter('test')->float('test', null, false, false, -INF, null, null, null);
+		$table = TableBuilder::alter('test')->float('test', false, false, -INF, null, null, null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` FLOAT NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->float('test', null, false, false, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$table = TableBuilder::alter('test')->float('test', false, false, -INF, ColumnAction::POSITION_FIRST, null, null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` FLOAT NOT NULL FIRST;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->float('test', null, false, false, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$table = TableBuilder::alter('test')->float('test', false, false, -INF, ColumnAction::POSITION_AFTER, 'id', null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` FLOAT NOT NULL AFTER `id`;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->float('test', null, false, false, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$table = TableBuilder::alter('test')->float('test', false, false, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` FLOAT NOT NULL AFTER `id`;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->float('test', null, false, false, -INF, null, null, 'test');
+		$table = TableBuilder::alter('test')->float('test', false, false, -INF, null, null, 'test');
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` FLOAT NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->float('test', null, false, false, -INF, null, null, new IntColumn('test'));
+		$table = TableBuilder::alter('test')->float('test', false, false, -INF, null, null, new IntColumn('test'));
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` FLOAT NOT NULL;', $table->getQuery());
 	}

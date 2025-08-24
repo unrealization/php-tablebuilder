@@ -82,7 +82,7 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testFloat()
 	{
-		$table = TableBuilder::create('test')->float('test', null, false, false, -INF);
+		$table = TableBuilder::create('test')->float('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` FLOAT NOT NULL);', $table->getQuery());
 	}
