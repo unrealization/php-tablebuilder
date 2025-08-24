@@ -35,5 +35,8 @@ class UniqueKeyTest extends TestCase
 		$this->assertInstanceOf(UniqueKey::class, $index);
 		$this->assertSame('test_index', $index->getName());
 		$this->assertSame('UNIQUE KEY `test_index` (`test`)', $index->getQuerySnippet());
+
+		$this->expectException(\InvalidArgumentException::class);
+		new UniqueKey(array(new \DateTime()));
 	}
 }

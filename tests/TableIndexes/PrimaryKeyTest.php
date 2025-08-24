@@ -30,5 +30,8 @@ class PrimaryKeyTest extends TestCase
 		$this->assertInstanceOf(PrimaryKey::class, $index);
 		$this->assertSame('PRIMARY', $index->getName());
 		$this->assertSame('PRIMARY KEY (`test1`,`test2`)', $index->getQuerySnippet());
+
+		$this->expectException(\InvalidArgumentException::class);
+		new PrimaryKey(array(new \DateTime()));
 	}
 }

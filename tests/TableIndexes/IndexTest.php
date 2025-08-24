@@ -35,5 +35,8 @@ class IndexTest extends TestCase
 		$this->assertInstanceOf(Index::class, $index);
 		$this->assertSame('test_index', $index->getName());
 		$this->assertSame('INDEX `test_index` (`test`)', $index->getQuerySnippet());
+
+		$this->expectException(\InvalidArgumentException::class);
+		new Index(array(new \DateTime()));
 	}
 }

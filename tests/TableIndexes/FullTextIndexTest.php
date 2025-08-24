@@ -35,5 +35,8 @@ class FullTextIndexTest extends TestCase
 		$this->assertInstanceOf(FullTextIndex::class, $index);
 		$this->assertSame('test_index', $index->getName());
 		$this->assertSame('FULLTEXT `test_index` (`test`)', $index->getQuerySnippet());
+
+		$this->expectException(\InvalidArgumentException::class);
+		new FullTextIndex(array(new \DateTime()));
 	}
 }
