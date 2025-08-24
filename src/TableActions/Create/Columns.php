@@ -16,6 +16,10 @@ use unrealization\TableColumns\VarCharColumn;
 use unrealization\TableActions\TableAction;
 use unrealization\TableColumns\TimeColumn;
 use unrealization\TableColumns\TimeStampColumn;
+use unrealization\TableColumns\SmallIntColumn;
+use unrealization\TableColumns\TinyIntColumn;
+use unrealization\TableColumns\MediumIntColumn;
+use unrealization\TableColumns\DoubleColumn;
 
 trait Columns
 {
@@ -41,6 +45,11 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(DecimalColumn::class, ColumnAction::MODE_CREATE, $name, $size, $precision, $unsigned, $nullable, $default));
 	}
 
+	public function double(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_CREATE, $name, $size, $unsigned, $nullable, $default));
+	}
+
 	public function float(string $name, ?int $size = null, bool $unsigned = false, bool $nullable = false, $default = -INF): self
 	{
 		return $this->addColumn(ColumnAction::create(FloatColumn::class, ColumnAction::MODE_CREATE, $name, $size, $unsigned, $nullable, $default));
@@ -49,6 +58,16 @@ trait Columns
 	public function int(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
 	{
 		return $this->addColumn(ColumnAction::create(IntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
+	}
+
+	public function mediumint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(MediumIntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
+	}
+
+	public function smallint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(SmallIntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
 	}
 
 	public function text(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
@@ -64,6 +83,11 @@ trait Columns
 	public function timestamp(string $name, bool $nullable = false, $default = -INF): self
 	{
 		return $this->addColumn(ColumnAction::create(TimeStampColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $default));
+	}
+
+	public function tinyint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(TinyIntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
 	}
 
 	public function varchar(string $name, int $size, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
