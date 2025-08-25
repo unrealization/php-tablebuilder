@@ -11,7 +11,7 @@
 	"type" : "library",
 	"license" : "LGPL-2.1",
 	"bin" : [
-		"migrations"
+		"dbMigrate.php"
 	],
 	"require" : {
 		"php" : ">=8.2"
