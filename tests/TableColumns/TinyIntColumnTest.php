@@ -32,6 +32,11 @@ class TinyIntColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` TINYINT', $column->getQuerySnippet());
 
+		$column = new TinyIntColumn('test', false, false, true, -INF);
+		$this->assertInstanceOf(TinyIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` TINYINT NOT NULL AUTO_INCREMENT', $column->getQuerySnippet());
+
 		$column = new TinyIntColumn('test', false, false, false, 5);
 		$this->assertInstanceOf(TinyIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
@@ -41,6 +46,11 @@ class TinyIntColumnTest extends TestCase
 		$this->assertInstanceOf(TinyIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` TINYINT NOT NULL DEFAULT 12', $column->getQuerySnippet());
+
+		$column = new TinyIntColumn('test', false, true, false, null);
+		$this->assertInstanceOf(TinyIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` TINYINT DEFAULT NULL', $column->getQuerySnippet());
 
 		$this->expectException(\InvalidArgumentException::class);
 		new TinyIntColumn('test', false, false, false, 'test');

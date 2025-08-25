@@ -27,6 +27,11 @@ class TimeColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` TIME', $column->getQuerySnippet());
 
+		$column = new TimeColumn('test', true, null);
+		$this->assertInstanceOf(TimeColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` TIME DEFAULT NULL', $column->getQuerySnippet());
+
 		$date = new \DateTime('1996-04-30 18:00:00Z');
 
 		$column = new TimeColumn('test', false, $date);

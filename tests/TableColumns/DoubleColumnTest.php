@@ -32,6 +32,11 @@ class DoubleColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` DOUBLE', $column->getQuerySnippet());
 
+		$column = new DoubleColumn('test', false, true, null);
+		$this->assertInstanceOf(DoubleColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` DOUBLE DEFAULT NULL', $column->getQuerySnippet());
+
 		$column = new DoubleColumn('test', false, false, -7);
 		$this->assertInstanceOf(DoubleColumn::class, $column);
 		$this->assertSame('test', $column->getName());

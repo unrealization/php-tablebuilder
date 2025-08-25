@@ -42,6 +42,11 @@ class DecimalColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` DECIMAL', $column->getQuerySnippet());
 
+		$column = new DecimalColumn('test', null, null, false, true, null);
+		$this->assertInstanceOf(DecimalColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` DECIMAL DEFAULT NULL', $column->getQuerySnippet());
+
 		$column = new DecimalColumn('test', null, null, false, false, -7);
 		$this->assertInstanceOf(DecimalColumn::class, $column);
 		$this->assertSame('test', $column->getName());

@@ -32,6 +32,11 @@ class BigIntColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` BIGINT', $column->getQuerySnippet());
 
+		$column = new BigIntColumn('test', false, false, true, -INF);
+		$this->assertInstanceOf(BigIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` BIGINT NOT NULL AUTO_INCREMENT', $column->getQuerySnippet());
+
 		$column = new BigIntColumn('test', false, false, false, 5);
 		$this->assertInstanceOf(BigIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
@@ -41,6 +46,11 @@ class BigIntColumnTest extends TestCase
 		$this->assertInstanceOf(BigIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` BIGINT NOT NULL DEFAULT 12', $column->getQuerySnippet());
+
+		$column = new BigIntColumn('test', false, true, false, null);
+		$this->assertInstanceOf(BigIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` BIGINT DEFAULT NULL', $column->getQuerySnippet());
 
 		$this->expectException(\InvalidArgumentException::class);
 		new BigIntColumn('test', false, false, false, 'test');

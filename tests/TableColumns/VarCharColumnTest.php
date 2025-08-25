@@ -12,11 +12,6 @@ class VarCharColumnTest extends TestCase
 	 */
 	public function testVarCharColumn()
 	{
-		$column = new VarCharColumn('test', 32);
-		$this->assertInstanceOf(VarCharColumn::class, $column);
-		$this->assertSame('test', $column->getName());
-		$this->assertSame('`test` VARCHAR(32) NOT NULL', $column->getQuerySnippet());
-
 		$column = new VarCharColumn('test', 64);
 		$this->assertInstanceOf(VarCharColumn::class, $column);
 		$this->assertSame('test', $column->getName());
@@ -46,6 +41,11 @@ class VarCharColumnTest extends TestCase
 		$this->assertInstanceOf(VarCharColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` VARCHAR(64) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci', $column->getQuerySnippet());
+
+		$column = new VarCharColumn('test', 64, true, null, null, null);
+		$this->assertInstanceOf(VarCharColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` VARCHAR(64) DEFAULT NULL', $column->getQuerySnippet());
 
 		$column = new VarCharColumn('test', 64, false, null, null, 'test');
 		$this->assertInstanceOf(VarCharColumn::class, $column);

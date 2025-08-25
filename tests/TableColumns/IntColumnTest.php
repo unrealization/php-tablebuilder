@@ -32,6 +32,11 @@ class IntColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` INT', $column->getQuerySnippet());
 
+		$column = new IntColumn('test', false, false, true, -INF);
+		$this->assertInstanceOf(IntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` INT NOT NULL AUTO_INCREMENT', $column->getQuerySnippet());
+
 		$column = new IntColumn('test', false, false, false, 5);
 		$this->assertInstanceOf(IntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
@@ -41,6 +46,11 @@ class IntColumnTest extends TestCase
 		$this->assertInstanceOf(IntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` INT NOT NULL DEFAULT 12', $column->getQuerySnippet());
+
+		$column = new IntColumn('test', false, true, false, null);
+		$this->assertInstanceOf(IntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` INT DEFAULT NULL', $column->getQuerySnippet());
 
 		$this->expectException(\InvalidArgumentException::class);
 		new IntColumn('test', false, false, false, 'test');

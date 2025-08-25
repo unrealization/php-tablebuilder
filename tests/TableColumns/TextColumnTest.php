@@ -42,6 +42,11 @@ class TextColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` TEXT NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci', $column->getQuerySnippet());
 
+		$column = new TextColumn('test', true, null, null, null);
+		$this->assertInstanceOf(TextColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` TEXT DEFAULT NULL', $column->getQuerySnippet());
+
 		$column = new TextColumn('test', false, null, null, 'test');
 		$this->assertInstanceOf(TextColumn::class, $column);
 		$this->assertSame('test', $column->getName());

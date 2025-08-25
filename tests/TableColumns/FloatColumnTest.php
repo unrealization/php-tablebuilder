@@ -32,6 +32,11 @@ class FloatColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` FLOAT', $column->getQuerySnippet());
 
+		$column = new FloatColumn('test', false, true, null);
+		$this->assertInstanceOf(FloatColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` FLOAT DEFAULT NULL', $column->getQuerySnippet());
+
 		$column = new FloatColumn('test', false, false, -7);
 		$this->assertInstanceOf(FloatColumn::class, $column);
 		$this->assertSame('test', $column->getName());

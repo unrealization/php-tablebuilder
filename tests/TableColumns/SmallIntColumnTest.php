@@ -32,6 +32,11 @@ class SmallIntColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` SMALLINT', $column->getQuerySnippet());
 
+		$column = new SmallIntColumn('test', false, false, true, -INF);
+		$this->assertInstanceOf(SmallIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` SMALLINT NOT NULL AUTO_INCREMENT', $column->getQuerySnippet());
+
 		$column = new SmallIntColumn('test', false, false, false, 5);
 		$this->assertInstanceOf(SmallIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
@@ -41,6 +46,11 @@ class SmallIntColumnTest extends TestCase
 		$this->assertInstanceOf(SmallIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` SMALLINT NOT NULL DEFAULT 12', $column->getQuerySnippet());
+
+		$column = new SmallIntColumn('test', false, true, false, null);
+		$this->assertInstanceOf(SmallIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` SMALLINT DEFAULT NULL', $column->getQuerySnippet());
 
 		$this->expectException(\InvalidArgumentException::class);
 		new SmallIntColumn('test', false, false, false, 'test');

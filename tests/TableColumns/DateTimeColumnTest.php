@@ -27,6 +27,11 @@ class DateTimeColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` DATETIME', $column->getQuerySnippet());
 
+		$column = new DateTimeColumn('test', true, null);
+		$this->assertInstanceOf(DateTimeColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` DATETIME DEFAULT NULL', $column->getQuerySnippet());
+
 		$date = new \DateTime('1996-04-30 18:00:00Z');
 
 		$column = new DateTimeColumn('test', false, $date);

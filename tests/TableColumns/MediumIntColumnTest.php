@@ -32,6 +32,11 @@ class MediumIntColumnTest extends TestCase
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` MEDIUMINT', $column->getQuerySnippet());
 
+		$column = new MediumIntColumn('test', false, false, true, -INF);
+		$this->assertInstanceOf(MediumIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` MEDIUMINT NOT NULL AUTO_INCREMENT', $column->getQuerySnippet());
+
 		$column = new MediumIntColumn('test', false, false, false, 5);
 		$this->assertInstanceOf(MediumIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
@@ -41,6 +46,11 @@ class MediumIntColumnTest extends TestCase
 		$this->assertInstanceOf(MediumIntColumn::class, $column);
 		$this->assertSame('test', $column->getName());
 		$this->assertSame('`test` MEDIUMINT NOT NULL DEFAULT 12', $column->getQuerySnippet());
+
+		$column = new MediumIntColumn('test', false, true, false, null);
+		$this->assertInstanceOf(MediumIntColumn::class, $column);
+		$this->assertSame('test', $column->getName());
+		$this->assertSame('`test` MEDIUMINT DEFAULT NULL', $column->getQuerySnippet());
 
 		$this->expectException(\InvalidArgumentException::class);
 		new MediumIntColumn('test', false, false, false, 'test');
