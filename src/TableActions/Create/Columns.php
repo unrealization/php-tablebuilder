@@ -20,6 +20,7 @@ use unrealization\TableColumns\SmallIntColumn;
 use unrealization\TableColumns\TinyIntColumn;
 use unrealization\TableColumns\MediumIntColumn;
 use unrealization\TableColumns\DoubleColumn;
+use unrealization\TableColumns\EnumColumn;
 
 trait Columns
 {
@@ -48,6 +49,11 @@ trait Columns
 	public function double(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF): self
 	{
 		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $default));
+	}
+
+	public function enum(string $name, array $enumValues, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(EnumColumn::class, ColumnAction::MODE_CREATE, $name, $enumValues, $nullable, $characterSet, $collation, $default));
 	}
 
 	public function float(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF): self

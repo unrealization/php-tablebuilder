@@ -12,6 +12,7 @@ abstract class GenericColumn
 	private bool $unsigned = false;
 	private bool $nullable = false;
 	private bool $autoIncrement = false;
+	private array $enumValues = array();
 	private ?string $characterSet = null;
 	private ?string $collation = null;
 	private $default = -INF;
@@ -38,6 +39,11 @@ abstract class GenericColumn
 			}
 
 			$sql .= ')';
+		}
+
+		if (!empty($this->enumValues))
+		{
+			$sql .= '('.implode(',', $this->enumValues).')';
 		}
 
 		if ($this->unsigned)
@@ -114,6 +120,18 @@ abstract class GenericColumn
 	final protected function setAutoIncrement(bool $autoIncrement): static
 	{
 		$this->autoIncrement = $autoIncrement;
+		return $this;
+	}
+
+	final protected function setEnumValues(array $enumValues): static
+	{
+		$this->enumValues = array();
+
+		foreach ($enumValues as $value)
+		{
+			$this->enumValues[] = $this->convertDefaultValue($value);
+		}
+
 		return $this;
 	}
 

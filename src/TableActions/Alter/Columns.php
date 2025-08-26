@@ -20,6 +20,7 @@ use unrealization\TableColumns\MediumIntColumn;
 use unrealization\TableColumns\SmallIntColumn;
 use unrealization\TableColumns\TinyIntColumn;
 use unrealization\TableColumns\DoubleColumn;
+use unrealization\TableColumns\EnumColumn;
 
 trait Columns
 {
@@ -58,6 +59,11 @@ trait Columns
 	public function double(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
 		return $this->addColumn(ColumnAction::create(DoubleColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+	}
+
+	public function enum(string $name, array $enumValues, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF, ?string $positon = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom): self
+	{
+		return $this->addColumn(ColumnAction::create(EnumColumn::class, ColumnAction::MODE_ALTER, $name, $enumValues, $nullable, $characterSet, $collation, $default)->setPosition($positon, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function float(string $name, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
