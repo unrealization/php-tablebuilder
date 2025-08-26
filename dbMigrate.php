@@ -265,7 +265,11 @@ function checkStatus(string $migrationDirectory): void
 	}
 }
 
-if (is_file(__DIR__.'/../autoload.php'))
+if (isset($GLOBALS['_composer_autoload_path']))
+{
+	require_once($GLOBALS['_composer_autoload_path']);
+}
+elseif (is_file(__DIR__.'/../autoload.php'))
 {
 	require_once(__DIR__.'/../autoload.php');
 }
