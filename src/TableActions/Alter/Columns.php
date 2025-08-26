@@ -49,9 +49,9 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(DateColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
-	public function datetime(string $name, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	public function datetime(string $name, bool $nullable = false, bool $autoUpdate = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
-		return $this->addColumn(ColumnAction::create(DateTimeColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+		return $this->addColumn(ColumnAction::create(DateTimeColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $autoUpdate, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function decimal(string $name, ?int $size = null, ?int $precision = null, bool $unsigned = false, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
@@ -109,9 +109,9 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(TimeColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
-	public function timestamp(string $name, bool $nullable = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	public function timestamp(string $name, bool $nullable = false, bool $autoUpdate = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
-		return $this->addColumn(ColumnAction::create(TimeStampColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+		return $this->addColumn(ColumnAction::create(TimeStampColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $autoUpdate, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function tinyint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self

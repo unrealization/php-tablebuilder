@@ -5,10 +5,11 @@ namespace unrealization\TableColumns;
 
 class TimeStampColumn extends GenericColumn
 {
-	public function __construct(string $name, bool $nullable = false, $default = -INF)
+	public function __construct(string $name, bool $nullable = false, $autoUpdate = false, $default = -INF)
 	{
 		parent::__construct($name, 'TIMESTAMP');
 		$this->setNullable($nullable);
+		$this->setAutoUpdate($autoUpdate);
 		$this->setDefault($default);
 	}
 
@@ -24,7 +25,18 @@ class TimeStampColumn extends GenericColumn
 			}
 			else
 			{
-				$default = new \DateTime($default);
+				switch ($default) {
+					case 'CURRENT_TIMESTAMP':
+					case 'NOW()':
+					case 'CURRENT_DATE':
+					case 'CURRENT_TIME':
+					case 'LOCALTIME':
+					case 'LOCALTIMESTAMP':
+						return $default;
+					default:
+						$default = new \DateTime($default);
+						break;
+				}
 			}
 		}
 

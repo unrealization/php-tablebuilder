@@ -39,9 +39,9 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(DateColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $default));
 	}
 
-	public function datetime(string $name, bool $nullable = false, $default = -INF): self
+	public function datetime(string $name, bool $nullable = false, bool $autoUpdate = false, $default = -INF): self
 	{
-		return $this->addColumn(ColumnAction::create(DateTimeColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $default));
+		return $this->addColumn(ColumnAction::create(DateTimeColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $autoUpdate, $default));
 	}
 
 	public function decimal(string $name, ?int $size = null, ?int $precision = null, bool $unsigned = false, bool $nullable = false, $default = -INF): self
@@ -99,9 +99,9 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(TimeColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $default));
 	}
 
-	public function timestamp(string $name, bool $nullable = false, $default = -INF): self
+	public function timestamp(string $name, bool $nullable = false, bool $autoUpdate = false, $default = -INF): self
 	{
-		return $this->addColumn(ColumnAction::create(TimeStampColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $default));
+		return $this->addColumn(ColumnAction::create(TimeStampColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $autoUpdate, $default));
 	}
 
 	public function tinyint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self

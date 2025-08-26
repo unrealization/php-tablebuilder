@@ -128,27 +128,27 @@ class AlterColumnsTest extends TestCase
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` DATETIME NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->datetime('test', false, -INF, null, null, null);
+		$table = TableBuilder::alter('test')->datetime('test', false, false, -INF, null, null, null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` DATETIME NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->datetime('test', false, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$table = TableBuilder::alter('test')->datetime('test', false, false, -INF, ColumnAction::POSITION_FIRST, null, null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` DATETIME NOT NULL FIRST;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->datetime('test', false, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$table = TableBuilder::alter('test')->datetime('test', false, false, -INF, ColumnAction::POSITION_AFTER, 'id', null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` DATETIME NOT NULL AFTER `id`;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->datetime('test', false, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$table = TableBuilder::alter('test')->datetime('test', false, false, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` DATETIME NOT NULL AFTER `id`;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->datetime('test', false, -INF, null, null, 'test');
+		$table = TableBuilder::alter('test')->datetime('test', false, false, -INF, null, null, 'test');
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` DATETIME NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->datetime('test', false, -INF, null, null, new IntColumn('test'));
+		$table = TableBuilder::alter('test')->datetime('test', false, false, -INF, null, null, new IntColumn('test'));
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` DATETIME NOT NULL;', $table->getQuery());
 	}
@@ -496,27 +496,27 @@ class AlterColumnsTest extends TestCase
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TIMESTAMP NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->timestamp('test', false, -INF, null, null, null);
+		$table = TableBuilder::alter('test')->timestamp('test', false, false, -INF, null, null, null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TIMESTAMP NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->timestamp('test', false, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$table = TableBuilder::alter('test')->timestamp('test', false, false, -INF, ColumnAction::POSITION_FIRST, null, null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TIMESTAMP NOT NULL FIRST;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->timestamp('test', false, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$table = TableBuilder::alter('test')->timestamp('test', false, false, -INF, ColumnAction::POSITION_AFTER, 'id', null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TIMESTAMP NOT NULL AFTER `id`;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->timestamp('test', false, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$table = TableBuilder::alter('test')->timestamp('test', false, false, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TIMESTAMP NOT NULL AFTER `id`;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->timestamp('test', false, -INF, null, null, 'test');
+		$table = TableBuilder::alter('test')->timestamp('test', false, false, -INF, null, null, 'test');
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` TIMESTAMP NOT NULL;', $table->getQuery());
 
-		$table = TableBuilder::alter('test')->timestamp('test', false, -INF, null, null, new IntColumn('test'));
+		$table = TableBuilder::alter('test')->timestamp('test', false, false, -INF, null, null, new IntColumn('test'));
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` TIMESTAMP NOT NULL;', $table->getQuery());
 	}

@@ -15,6 +15,7 @@ abstract class GenericColumn
 	private array $enumValues = array();
 	private ?string $characterSet = null;
 	private ?string $collation = null;
+	private bool $autoUpdate = false;
 	private $default = -INF;
 
 	abstract protected function convertDefaultValue($default): int|float|string;
@@ -85,6 +86,11 @@ abstract class GenericColumn
 			}
 		}
 
+		if ($this->autoUpdate)
+		{
+			$sql .= ' ON UPDATE CURRENT_TIMESTAMP';
+		}
+
 		return $sql;
 	}
 
@@ -144,6 +150,12 @@ abstract class GenericColumn
 	final protected function setCollation(?string $collation): static
 	{
 		$this->collation = $collation;
+		return $this;
+	}
+
+	final protected function setAutoUpdate(bool $autoUpdate): static
+	{
+		$this->autoUpdate = $autoUpdate;
 		return $this;
 	}
 

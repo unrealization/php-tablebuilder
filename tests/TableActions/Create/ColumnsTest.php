@@ -50,7 +50,7 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testDatetime()
 	{
-		$table = TableBuilder::create('test')->datetime('test', false, -INF);
+		$table = TableBuilder::create('test')->datetime('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` DATETIME NOT NULL);', $table->getQuery());
 	}
@@ -194,7 +194,7 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testTimestamp()
 	{
-		$table = TableBuilder::create('test')->timestamp('test', false, -INF);
+		$table = TableBuilder::create('test')->timestamp('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TIMESTAMP NOT NULL);', $table->getQuery());
 	}
