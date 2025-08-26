@@ -290,7 +290,7 @@ if (!empty($argv[1]))
 	$command = $argv[1];
 }
 
-$migrationDirectory = __DIR__.'/migrations';
+$migrationDirectory = getcwd().'/migrations';
 $migrationTable = 'migrations';
 
 switch ($command)
