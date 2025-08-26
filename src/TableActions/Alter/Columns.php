@@ -21,6 +21,9 @@ use unrealization\TableColumns\SmallIntColumn;
 use unrealization\TableColumns\TinyIntColumn;
 use unrealization\TableColumns\DoubleColumn;
 use unrealization\TableColumns\EnumColumn;
+use unrealization\TableColumns\MediumTextColumn;
+use unrealization\TableColumns\LongTextColumn;
+use unrealization\TableColumns\TinyTextColumn;
 
 trait Columns
 {
@@ -76,9 +79,19 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(IntColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
+	public function longtext(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	{
+		return $this->addColumn(ColumnAction::create(LongTextColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $characterSet, $collation, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+	}
+
 	public function mediumint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
 		return $this->addColumn(ColumnAction::create(MediumIntColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+	}
+
+	public function mediumtext(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	{
+		return $this->addColumn(ColumnAction::create(MediumTextColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $characterSet, $collation, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function smallint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
@@ -104,6 +117,11 @@ trait Columns
 	public function tinyint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
 	{
 		return $this->addColumn(ColumnAction::create(TinyIntColumn::class, ColumnAction::MODE_ALTER, $name, $unsigned, $nullable, $autoIncrement, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
+	}
+
+	public function tinytext(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self
+	{
+		return $this->addColumn(ColumnAction::create(TinyTextColumn::class, ColumnAction::MODE_ALTER, $name, $nullable, $characterSet, $collation, $default)->setPosition($position, $relativeTo)->changeFrom($changeFrom));
 	}
 
 	public function varchar(string $name, int $size, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF, ?string $position = null, GenericColumn|string|null $relativeTo = null, GenericColumn|string|null $changeFrom = null): self

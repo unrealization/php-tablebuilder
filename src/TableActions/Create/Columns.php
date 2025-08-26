@@ -21,6 +21,9 @@ use unrealization\TableColumns\TinyIntColumn;
 use unrealization\TableColumns\MediumIntColumn;
 use unrealization\TableColumns\DoubleColumn;
 use unrealization\TableColumns\EnumColumn;
+use unrealization\TableColumns\TinyTextColumn;
+use unrealization\TableColumns\MediumTextColumn;
+use unrealization\TableColumns\LongTextColumn;
 
 trait Columns
 {
@@ -66,9 +69,19 @@ trait Columns
 		return $this->addColumn(ColumnAction::create(IntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
 	}
 
+	public function longtext(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(LongTextColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $characterSet, $collation, $default));
+	}
+
 	public function mediumint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
 	{
 		return $this->addColumn(ColumnAction::create(MediumIntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
+	}
+
+	public function mediumtext(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(MediumTextColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $characterSet, $collation, $default));
 	}
 
 	public function smallint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
@@ -94,6 +107,11 @@ trait Columns
 	public function tinyint(string $name, bool $unsigned = false, bool $nullable = false, bool $autoIncrement = false, $default = -INF): self
 	{
 		return $this->addColumn(ColumnAction::create(TinyIntColumn::class, ColumnAction::MODE_CREATE, $name, $unsigned, $nullable, $autoIncrement, $default));
+	}
+
+	public function tinytext(string $name, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
+	{
+		return $this->addColumn(ColumnAction::create(TinyTextColumn::class, ColumnAction::MODE_CREATE, $name, $nullable, $characterSet, $collation, $default));
 	}
 
 	public function varchar(string $name, int $size, bool $nullable = false, ?string $characterSet = null, ?string $collation = null, $default = -INF): self
