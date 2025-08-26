@@ -55,20 +55,7 @@ $dbConnection = new \PDO(\'mysql:host=\'.$dbHost.\'; port=\'.$dbPort.\'; dbname=
 $migrationTable = \''.$migrationTable.'\';
 ';
 	file_put_contents($migrationDirectory.'/00000000_000000_init.php', $content);
-	if (file_exists(__DIR__.'/../autoload.php'))
-	{
-		require_once(__DIR__.'/../autoload.php');
-	}
-	elseif (file_exists(__DIR__.'/vendor/autoload.php'))
-	{
-		require_once(__DIR__.'/vendor/autoload.php');
-	}
-	else
-	{
-		error_log('Cannot find autoloader.');
-		exit(1);
-	}
-	
+
 	$content = '<?php
 declare(strict_types=1);
 
