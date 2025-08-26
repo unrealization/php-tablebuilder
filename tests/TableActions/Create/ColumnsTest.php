@@ -18,6 +18,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testBigint()
 	{
+		$table = TableBuilder::create('test')->bigint('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` BIGINT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->bigint('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` BIGINT NOT NULL);', $table->getQuery());
@@ -34,6 +38,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testDate()
 	{
+		$table = TableBuilder::create('test')->date('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` DATE NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->date('test', false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` DATE NOT NULL);', $table->getQuery());
@@ -50,6 +58,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testDatetime()
 	{
+		$table = TableBuilder::create('test')->datetime('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` DATETIME NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->datetime('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` DATETIME NOT NULL);', $table->getQuery());
@@ -66,6 +78,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testDecimal()
 	{
+		$table = TableBuilder::create('test')->decimal('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` DECIMAL NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->decimal('test', null, null, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` DECIMAL NOT NULL);', $table->getQuery());
@@ -82,6 +98,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testDouble()
 	{
+		$table = TableBuilder::create('test')->double('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` DOUBLE NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->double('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` DOUBLE NOT NULL);', $table->getQuery());
@@ -98,6 +118,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testEnum()
 	{
+		$table = TableBuilder::create('test')->enum('test', array('value1', 'value2'));
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` ENUM(\'value1\',\'value2\') NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->enum('test', array('value1', 'value2'), false, null, null, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` ENUM(\'value1\',\'value2\') NOT NULL);', $table->getQuery());
@@ -114,6 +138,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testFloat()
 	{
+		$table = TableBuilder::create('test')->float('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` FLOAT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->float('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` FLOAT NOT NULL);', $table->getQuery());
@@ -130,6 +158,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testInt()
 	{
+		$table = TableBuilder::create('test')->int('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` INT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->int('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` INT NOT NULL);', $table->getQuery());
@@ -146,6 +178,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testLongtext()
 	{
+		$table = TableBuilder::create('test')->longtext('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` LONGTEXT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->longtext('test', false, null, null, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` LONGTEXT NOT NULL);', $table->getQuery());
@@ -162,6 +198,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testMediumint()
 	{
+		$table = TableBuilder::create('test')->mediumint('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMINT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->mediumint('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMINT NOT NULL);', $table->getQuery());
@@ -178,6 +218,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testMediumtext()
 	{
+		$table = TableBuilder::create('test')->mediumtext('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMTEXT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->mediumtext('test', false, null, null, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMTEXT NOT NULL);', $table->getQuery());
@@ -194,6 +238,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testSmallint()
 	{
+		$table = TableBuilder::create('test')->smallint('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` SMALLINT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->smallint('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` SMALLINT NOT NULL);', $table->getQuery());
@@ -210,6 +258,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testText()
 	{
+		$table = TableBuilder::create('test')->text('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TEXT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->text('test', false, null, null, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TEXT NOT NULL);', $table->getQuery());
@@ -226,6 +278,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testTime()
 	{
+		$table = TableBuilder::create('test')->time('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TIME NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->time('test', false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TIME NOT NULL);', $table->getQuery());
@@ -242,6 +298,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testTimestamp()
 	{
+		$table = TableBuilder::create('test')->timestamp('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TIMESTAMP NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->timestamp('test', false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TIMESTAMP NOT NULL);', $table->getQuery());
@@ -258,6 +318,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testTinyint()
 	{
+		$table = TableBuilder::create('test')->tinyint('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TINYINT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->tinyint('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TINYINT NOT NULL);', $table->getQuery());
@@ -274,6 +338,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testTinyext()
 	{
+		$table = TableBuilder::create('test')->tinytext('test');
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TINYTEXT NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->tinytext('test', false, null, null, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TINYTEXT NOT NULL);', $table->getQuery());
@@ -290,6 +358,10 @@ class CreateColumnsTest extends TestCase
 	 */
 	public function testVarchar()
 	{
+		$table = TableBuilder::create('test')->varchar('test', 32);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL);', $table->getQuery());
+
 		$table = TableBuilder::create('test')->varchar('test', 32, false, null, null, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` VARCHAR(32) NOT NULL);', $table->getQuery());
