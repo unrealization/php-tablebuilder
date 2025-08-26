@@ -94,6 +94,22 @@ class CreateColumnsTest extends TestCase
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\EnumColumn
+	 */
+	public function testEnum()
+	{
+		$table = TableBuilder::create('test')->enum('test', array('value1', 'value2'), false, null, null, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` ENUM(\'value1\',\'value2\') NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
 	 * @uses unrealization\TableColumns\FloatColumn
 	 */
 	public function testFloat()
@@ -126,6 +142,22 @@ class CreateColumnsTest extends TestCase
 	 * @uses unrealization\TableBuilder
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\LongTextColumn
+	 */
+	public function testLongtext()
+	{
+		$table = TableBuilder::create('test')->longtext('test', false, null, null, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` LONGTEXT NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
 	 * @uses unrealization\TableColumns\MediumIntColumn
 	 */
 	public function testMediumint()
@@ -133,6 +165,22 @@ class CreateColumnsTest extends TestCase
 		$table = TableBuilder::create('test')->mediumint('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMINT NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\MediumTextColumn
+	 */
+	public function testMediumtext()
+	{
+		$table = TableBuilder::create('test')->mediumtext('test', false, null, null, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` MEDIUMTEXT NOT NULL);', $table->getQuery());
 	}
 
 	/**
@@ -213,6 +261,22 @@ class CreateColumnsTest extends TestCase
 		$table = TableBuilder::create('test')->tinyint('test', false, false, false, -INF);
 		$this->assertInstanceOf(CreateTable::class, $table);
 		$this->assertSame('CREATE TABLE `test` (`test` TINYINT NOT NULL);', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Create\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\CreateTable
+	 * @uses unrealization\TableColumns\TinyTextColumn
+	 */
+	public function testTinyext()
+	{
+		$table = TableBuilder::create('test')->tinytext('test', false, null, null, -INF);
+		$this->assertInstanceOf(CreateTable::class, $table);
+		$this->assertSame('CREATE TABLE `test` (`test` TINYTEXT NOT NULL);', $table->getQuery());
 	}
 
 	/**

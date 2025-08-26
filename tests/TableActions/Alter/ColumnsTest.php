@@ -243,6 +243,47 @@ class AlterColumnsTest extends TestCase
 	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\AlterTable
+	 * @uses unrealization\TableColumns\EnumColumn
+	 */
+	public function testEnum()
+	{
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'));
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` ENUM(\'value1\',\'value2\') NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'), false, null, null, -INF, null, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` ENUM(\'value1\',\'value2\') NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'), false, null, null, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` ENUM(\'value1\',\'value2\') NOT NULL FIRST;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'), false, null, null, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` ENUM(\'value1\',\'value2\') NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'), false, null, null, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` ENUM(\'value1\',\'value2\') NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'), false, null, null, -INF, null, null, 'test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` ENUM(\'value1\',\'value2\') NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->enum('test', array('value1', 'value2'), false, null, null, -INF, null, null, new IntColumn('test'));
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` ENUM(\'value1\',\'value2\') NOT NULL;', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Alter\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\IntColumn
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\AlterTable
 	 * @uses unrealization\TableColumns\FloatColumn
 	 */
 	public function testFloat()
@@ -324,6 +365,47 @@ class AlterColumnsTest extends TestCase
 	 * @uses unrealization\TableColumns\IntColumn
 	 * @uses unrealization\TableColumns\GenericColumn
 	 * @uses unrealization\TableActions\AlterTable
+	 * @uses unrealization\TableColumns\LongTextColumn
+	 */
+	public function testLongtext()
+	{
+		$table = TableBuilder::alter('test')->longtext('test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` LONGTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->longtext('test', false, null, null, -INF, null, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` LONGTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->longtext('test', false, null, null, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` LONGTEXT NOT NULL FIRST;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->longtext('test', false, null, null, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` LONGTEXT NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->longtext('test', false, null, null, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` LONGTEXT NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->longtext('test', false, null, null, -INF, null, null, 'test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` LONGTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->longtext('test', false, null, null, -INF, null, null, new IntColumn('test'));
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` LONGTEXT NOT NULL;', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Alter\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\IntColumn
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\AlterTable
 	 * @uses unrealization\TableColumns\MediumIntColumn
 	 */
 	public function testMediumint()
@@ -355,6 +437,47 @@ class AlterColumnsTest extends TestCase
 		$table = TableBuilder::alter('test')->mediumint('test', false, false, false, -INF, null, null, new IntColumn('test'));
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` MEDIUMINT NOT NULL;', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Alter\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\IntColumn
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\AlterTable
+	 * @uses unrealization\TableColumns\MediumTextColumn
+	 */
+	public function testMediumtext()
+	{
+		$table = TableBuilder::alter('test')->mediumtext('test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` MEDIUMTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->mediumtext('test', false, null, null, -INF, null, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` MEDIUMTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->mediumtext('test', false, null, null, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` MEDIUMTEXT NOT NULL FIRST;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->mediumtext('test', false, null, null, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` MEDIUMTEXT NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->mediumtext('test', false, null, null, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` MEDIUMTEXT NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->mediumtext('test', false, null, null, -INF, null, null, 'test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` MEDIUMTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->mediumtext('test', false, null, null, -INF, null, null, new IntColumn('test'));
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` MEDIUMTEXT NOT NULL;', $table->getQuery());
 	}
 
 	/**
@@ -560,6 +683,47 @@ class AlterColumnsTest extends TestCase
 		$table = TableBuilder::alter('test')->tinyint('test', false, false, false, -INF, null, null, new IntColumn('test'));
 		$this->assertInstanceOf(AlterTable::class, $table);
 		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` TINYINT NOT NULL;', $table->getQuery());
+	}
+
+	/**
+	 * @covers unrealization\TableActions\Alter\Columns
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\ComponentActions\ColumnAction
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableColumns\IntColumn
+	 * @uses unrealization\TableColumns\GenericColumn
+	 * @uses unrealization\TableActions\AlterTable
+	 * @uses unrealization\TableColumns\TinyTextColumn
+	 */
+	public function testTinytext()
+	{
+		$table = TableBuilder::alter('test')->tinytext('test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TINYTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->tinytext('test', false, null, null, -INF, null, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TINYTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->tinytext('test', false, null, null, -INF, ColumnAction::POSITION_FIRST, null, null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TINYTEXT NOT NULL FIRST;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->tinytext('test', false, null, null, -INF, ColumnAction::POSITION_AFTER, 'id', null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TINYTEXT NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->tinytext('test', false, null, null, -INF, ColumnAction::POSITION_AFTER, new IntColumn('id'), null);
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` ADD COLUMN `test` TINYTEXT NOT NULL AFTER `id`;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->tinytext('test', false, null, null, -INF, null, null, 'test');
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` TINYTEXT NOT NULL;', $table->getQuery());
+
+		$table = TableBuilder::alter('test')->tinytext('test', false, null, null, -INF, null, null, new IntColumn('test'));
+		$this->assertInstanceOf(AlterTable::class, $table);
+		$this->assertSame('ALTER TABLE `test` CHANGE COLUMN `test` `test` TINYTEXT NOT NULL;', $table->getQuery());
 	}
 
 	/**
