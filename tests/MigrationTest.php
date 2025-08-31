@@ -48,7 +48,7 @@ class MigrationTest extends TestCase
 		$result = Migration::status('migration-test', $fakeDb, allowFailure: true);
 		$this->assertNull($result);
 
-		$this->expectException(\PDOException::class);
+		$this->expectException(\Exception::class);
 		Migration::status('migration-test', $fakeDb);
 	}
 
@@ -75,10 +75,14 @@ class MigrationTest extends TestCase
 
 		$fakeMigrationStatement = $this->createMock(\PDOStatement::class);
 		$fakeMigrationStatement->method('bindValue');
-		$fakeMigrationStatement->method('execute');
+		$fakeMigrationStatement->method('execute')->willReturn(true);
+
+		$fakeLogStatement = $this->createMock(\PDOStatement::class);
+		$fakeLogStatement->method('bindValue');
+		$fakeLogStatement->method('execute')->willReturn(true);
 
 		$fakeDb = $this->createMock(\PDO::class);
-		$fakeDb->method('prepare')->willReturnOnConsecutiveCalls($fakeStatusStatement, $fakeMigrationStatement, $fakeMigrationStatement);
+		$fakeDb->method('prepare')->willReturnOnConsecutiveCalls($fakeStatusStatement, $fakeMigrationStatement, $fakeLogStatement);
 
 		$result = Migration::migrate('migration-test', $fakeDb, $migration::migrate());
 		$this->assertTrue($result);
@@ -93,7 +97,58 @@ class MigrationTest extends TestCase
 		$fakeDb->method('prepare')->willReturn($fakeStatusStatement);
 
 		$result = Migration::migrate('migration-test', $fakeDb, $migration::migrate());
+		$this->assertFalse($result);
+
+		$fakeStatusStatement = $this->createMock(\PDOStatement::class);
+		$fakeStatusStatement->method('bindValue');
+		$fakeStatusStatement->method('execute');
+		$fakeStatusStatement->method('rowCount')->willReturn(0);
+
+		$fakeMigrationStatement = $this->createMock(\PDOStatement::class);
+		$fakeMigrationStatement->method('bindValue');
+		$fakeMigrationStatement->method('execute')->willReturn(true);
+
+		$fakeLogStatement = $this->createMock(\PDOStatement::class);
+		$fakeLogStatement->method('bindValue');
+		$fakeLogStatement->method('execute')->willThrowException(new \PDOException('Fake database error.'));
+
+		$fakeDb = $this->createMock(\PDO::class);
+		$fakeDb->method('prepare')->willReturnOnConsecutiveCalls($fakeStatusStatement, $fakeMigrationStatement, $fakeLogStatement);
+
+		$result = Migration::migrate('migration-test', $fakeDb, $migration::migrate());
 		$this->assertTrue($result);
+
+		$fakeStatusStatement = $this->createMock(\PDOStatement::class);
+		$fakeStatusStatement->method('bindValue');
+		$fakeStatusStatement->method('execute');
+		$fakeStatusStatement->method('rowCount')->willReturn(0);
+
+		$fakeMigrationStatement = $this->createMock(\PDOStatement::class);
+		$fakeMigrationStatement->method('bindValue');
+		$fakeMigrationStatement->method('execute')->willReturn(false);
+
+		$fakeDb = $this->createMock(\PDO::class);
+		$fakeDb->method('prepare')->willReturnOnConsecutiveCalls($fakeStatusStatement, $fakeMigrationStatement);
+
+		$this->expectException(\Exception::class);
+		Migration::migrate('migration-test', $fakeDb, $migration::migrate());
+	}
+
+	/**
+	 * @covers unrealization\Migration
+	 * @uses unrealization\TableBuilder
+	 * @uses unrealization\TableActions\TableAction
+	 * @uses unrealization\TableActions\DropTable
+	 */
+	public function testMigrate_databaseError()
+	{
+		$migration = new class implements MigrationInterface
+		{
+			public static function migrate(): TableAction
+			{
+				return TableBuilder::drop('test');
+			}
+		};
 
 		$fakeStatusStatement = $this->createMock(\PDOStatement::class);
 		$fakeStatusStatement->method('bindValue');
@@ -107,22 +162,40 @@ class MigrationTest extends TestCase
 		$fakeDb = $this->createMock(\PDO::class);
 		$fakeDb->method('prepare')->willReturnOnConsecutiveCalls($fakeStatusStatement, $fakeMigrationStatement);
 
-		$result = Migration::migrate('migration-test', $fakeDb, $migration::migrate());
-		$this->assertFalse($result);
+		$this->expectException(\PDOException::class);
+		Migration::migrate('migration-test', $fakeDb, $migration::migrate());
+	}
 
-		$fakeStatusStatement = $this->createMock(\PDOStatement::class);
-		$fakeStatusStatement->method('bindValue');
-		$fakeStatusStatement->method('execute');
-		$fakeStatusStatement->method('rowCount')->willReturn(0);
-
-		$fakeMigrationStatement = $this->createMock(\PDOStatement::class);
-		$fakeMigrationStatement->method('bindValue');
-		$fakeMigrationStatement->method('execute')->willReturnOnConsecutiveCalls(true, $this->throwException(new \PDOException('Fake database error.')));
+	/**
+	 * @covers unrealization\Migration
+	 */
+	public function testLog()
+	{
+		$fakeStatement = $this->createMock(\PDOStatement::class);
+		$fakeStatement->method('bindValue');
+		$fakeStatement->method('execute')->willReturn(true);
 
 		$fakeDb = $this->createMock(\PDO::class);
-		$fakeDb->method('prepare')->willReturnOnConsecutiveCalls($fakeStatusStatement, $fakeMigrationStatement, $fakeMigrationStatement);
+		$fakeDb->method('prepare')->willReturn($fakeStatement);
 
-		$result = Migration::migrate('migration-test', $fakeDb, $migration::migrate());
-		$this->assertTrue($result);
+		$this->assertTrue(Migration::log('migration-test', $fakeDb));
+
+		$fakeStatement = $this->createMock(\PDOStatement::class);
+		$fakeStatement->method('bindValue');
+		$fakeStatement->method('execute')->willReturn(false);
+
+		$fakeDb = $this->createMock(\PDO::class);
+		$fakeDb->method('prepare')->willReturn($fakeStatement);
+
+		$this->assertFalse(Migration::log('migration-test', $fakeDb));
+
+		$fakeStatement = $this->createMock(\PDOStatement::class);
+		$fakeStatement->method('bindValue');
+		$fakeStatement->method('execute')->willThrowException(new \PDOException('Fake database error.'));
+
+		$fakeDb = $this->createMock(\PDO::class);
+		$fakeDb->method('prepare')->willReturn($fakeStatement);
+
+		$this->assertFalse(Migration::log('migration-test', $fakeDb));
 	}
 }

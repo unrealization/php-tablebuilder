@@ -21,21 +21,18 @@ class Migration
 		$statement = $db->prepare($sql);
 		$statement->bindValue('id', $id);
 
-		if ($allowFailure)
-		{
-			try
-			{
-				$statement->execute();
-			}
-			catch (\PDOException $e)
-			{
-				error_log('Cannot check migration status.');
-				return null;
-			}
-		}
-		else
+		try
 		{
 			$statement->execute();
+		}
+		catch (\PDOException $e)
+		{
+			if ($allowFailure)
+			{
+				return null;
+			}
+
+			throw new \Exception('Cannot check migration status.', previous: $e);
 		}
 
 		if ($statement->rowCount() === 0)
@@ -60,37 +57,42 @@ class Migration
 	{
 		if (!is_null(self::status($id, $db, $migrationTable, true)))
 		{
-			error_log('Migration '.$id.' has run already.');
-			return true;
+			return false;
 		}
 
 		$statement = $db->prepare($action->getQuery());
 
+		if (!$statement->execute())
+		{
+			throw new \Exception('Failed to execute migration '.$id);
+		}
+
+		self::log($id, $db, $migrationTable);
+		return true;
+	}
+
+	/**
+	 * Try to log a migration.
+	 * @param string $id
+	 * @param \PDO $db
+	 * @param string $migrationTable
+	 * @return bool
+	 */
+	public static function log(string $id, \PDO $db, string $migrationTable = 'migrations'): bool
+	{
+		$sql = 'INSERT INTO `'.$migrationTable.'` (`id`) VALUES (:id)';
+		$statement = $db->prepare($sql);
+		$statement->bindValue('id', $id);
+
 		try
 		{
-			$statement->execute();
+			$logged = $statement->execute();
 		}
 		catch (\PDOException $e)
 		{
-			error_log('Error running the migration: '.$e->getMessage());
 			return false;
 		}
 
-		$completed = new \DateTime();
-		$sql = 'INSERT INTO `'.$migrationTable.'` (`id`,`completed`) VALUES (:id, :completed)';
-		$statement = $db->prepare($sql);
-		$statement->bindValue('id', $id);
-		$statement->bindValue('completed', $completed->format('Y-m-d H:i:s'));
-
-		try
-		{
-			$statement->execute();
-		}
-		catch (\PDOException $e)
-		{
-			error_log('Cannot log migration.');
-		}
-
-		return true;
+		return $logged;
 	}
 }

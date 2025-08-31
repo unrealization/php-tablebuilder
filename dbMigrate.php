@@ -5,7 +5,7 @@ declare(strict_types=1);
 use unrealization\MigrationInterface;
 use unrealization\Migration;
 
-function getMigrations(string $migrationDirectory): array
+function getMigrations(string $migrationDirectory, bool $ignoreProblems = false): array
 {
 	$fileList = array();
 	$dirList = new \DirectoryIterator($migrationDirectory);
@@ -29,7 +29,67 @@ function getMigrations(string $migrationDirectory): array
 	}
 
 	ksort($fileList);
-	return $fileList;
+	$migrationInfo = array(
+		'dbConnection'			=> null,
+		'migrationTable'		=> null,
+		'migrations'			=> array()
+	);
+
+	foreach ($fileList as $file)
+	{
+		try
+		{
+			require_once($file->getPathname());
+		}
+		catch (\Exception $e)
+		{
+			if ($ignoreProblems)
+			{
+				error_log('Ignoring exception: '.$e->getMessage());
+				continue;
+			}
+
+			throw new \Exception('Error loading migration file '.$file->getPathname(), previous: $e);
+		}
+
+		$migrationClass = 'Migration_'.$file->getBasename('.php');
+
+		if (!class_exists($migrationClass))
+		{
+			continue;
+		}
+
+		if (!is_subclass_of($migrationClass, MigrationInterface::class))
+		{
+			error_log('Incorrect migration class in '.$file->getBasename());
+			continue;
+		}
+
+		$migrationInfo['migrations'][] = $migrationClass;
+	}
+
+	if (!$ignoreProblems)
+	{
+		if (!isset($dbConnection))
+		{
+			throw new \Exception('DB connection is not set.');
+		}
+
+		if (!($dbConnection instanceof \PDO))
+		{
+			throw new \Exception('DB connection incorrect.');
+		}
+
+		if (!isset($migrationTable))
+		{
+			throw new \Exception('Migration table is not set.');
+		}
+
+		$migrationInfo['dbConnection'] = $dbConnection;
+		$migrationInfo['migrationTable'] = $migrationTable;
+	}
+
+	return $migrationInfo;
 }
 
 function initMigrations(string $migrationTable, string $migrationDirectory): void
@@ -69,7 +129,7 @@ class Migration_00000000_000100_migrationTable implements MigrationInterface
 	{
 		return TableBuilder::create(\''.$migrationTable.'\', \'utf8mb4\', \'utf8mb4_0900_ai_ci\')
 			->varchar(\'id\', 128)
-			->datetime(\'completed\')
+			->timestamp(\'completed\', default: \'CURRENT_TIMESTAMP\')
 			->primaryKey(\'id\');
 	}
 }
@@ -104,142 +164,121 @@ class Migration_'.$creationDate->format('Ymd_His').'_'.$tableName.' implements M
 
 function runMigrations(string $migrationDirectory): void
 {
-	$fileList = getMigrations($migrationDirectory);
-
-	foreach ($fileList as $file)
+	try
 	{
-		require_once($file->getPathname());
+		$migrationInfo = getMigrations($migrationDirectory);
+	}
+	catch (\Exception $e)
+	{
+		error_log($e->getMessage());
+		exit(1);
+	}
 
-		if (!isset($dbConnection))
+	foreach ($migrationInfo['migrations'] as $migration)
+	{
+		error_log('Running migration '.$migration);
+
+		try
 		{
-			error_log('DB Connection is not set.');
+			$run = Migration::migrate($migration, $migrationInfo['dbConnection'], $migration::migrate(), $migrationInfo['migrationTable']);
+		}
+		catch (\PDOException $e)
+		{
+			error_log('Failed to run migration '.$migration);
 			exit(1);
 		}
 
-		if (!($dbConnection instanceof \PDO))
-		{
-			error_log('DB Connection is incorrect.');
-			exit(1);
-		}
-
-		if (!isset($migrationTable))
-		{
-			error_log('Migration table is not set.');
-			exit(1);
-		}
-
-		$migrationClass = 'Migration_'.$file->getBasename('.php');
-
-		if (!class_exists($migrationClass))
-		{
-			continue;
-		}
-
-		if (!is_subclass_of($migrationClass, MigrationInterface::class))
-		{
-			error_log('Incorrect migration class in '.$file->getBasename());
-			continue;
-		}
-
-		error_log('Running migration '.$migrationClass);
-		$success = Migration::migrate($migrationClass, $dbConnection, $migrationClass::migrate());
-
-		if ($success)
+		if ($run)
 		{
 			error_log('Done.');
 		}
 		else
 		{
-			error_log('Failed.');
+			error_log('Migration '.$migration.' has run already.');
+		}
+	}
+}
+
+function logMigrations(string $migrationDirectory): void
+{
+	try
+	{
+		$migrationInfo = getMigrations($migrationDirectory);
+	}
+	catch (\Exception $e)
+	{
+		error_log($e->getMessage());
+		exit(1);
+	}
+
+	foreach ($migrationInfo['migrations'] as $migration)
+	{
+		$completed = Migration::status($migration, $migrationInfo['dbConnection'], $migrationInfo['migrationTable']);
+
+		if (!is_null($completed))
+		{
+			error_log('Migration '.$migration.' has run already.');
+			continue;
+		}
+
+		$logged = Migration::log($migration, $migrationInfo['dbConnection'], $migrationInfo['migrationTable']);
+
+		if (!$logged)
+		{
+			error_log('Failed to log migration '.$migration);
 			exit(1);
 		}
+
+		error_log('Logged migration '.$migration);
 	}
 }
 
 function dumpQueries(string $migrationDirectory): void
 {
-	$fileList = getMigrations($migrationDirectory);
+	$migrationInfo = getMigrations($migrationDirectory, true);
 
-	foreach ($fileList as $file)
+	foreach ($migrationInfo['migrations'] as $migration)
 	{
 		try
 		{
-			require_once($file->getPathname());
-		}
-		catch (\PDOException $e)
-		{
-			//Ignore DB setup problems.
-		}
-
-		$migrationClass = 'Migration_'.$file->getBasename('.php');
-
-		if (!class_exists($migrationClass))
-		{
-			continue;
-		}
-
-		if (!is_subclass_of($migrationClass, MigrationInterface::class))
-		{
-			error_log('Incorrect migration class in '.$file->getBasename());
-			continue;
-		}
-
-		try
-		{
-			$query = $migrationClass::migrate()->getQuery();
+			$query = $migration::migrate()->getQuery();
 		}
 		catch (\Exception $e)
 		{
-			error_log('Incomplete migration class in '.$file->getBasename());
+			error_log($e->getMessage());
 			continue;
 		}
 
-		echo $migrationClass.' : '.PHP_EOL;
+		echo $migration.' : '.PHP_EOL;
 		echo $query.PHP_EOL.PHP_EOL;
 	}
 }
 
 function checkStatus(string $migrationDirectory): void
 {
-	$fileList = getMigrations($migrationDirectory);
-
-	foreach ($fileList as $file)
+	try
 	{
-		require_once($file->getPathname());
+		$migrationInfo = getMigrations($migrationDirectory);
+	}
+	catch (\Exception $e)
+	{
+		error_log($e->getMessage());
+		exit(1);
+	}
 
-		if (!isset($dbConnection))
+	foreach ($migrationInfo['migrations'] as $migration)
+	{
+		try
 		{
-			error_log('DB Connection is not set.');
+			$completed = Migration::status($migration, $migrationInfo['dbConnection'], $migrationInfo['migrationTable']);
+		}
+		catch (\Exception $e)
+		{
+			error_log($e->getMessage());
 			exit(1);
 		}
 
-		if (!($dbConnection instanceof \PDO))
-		{
-			error_log('DB Connection is incorrect.');
-			exit(1);
-		}
-
-		if (!isset($migrationTable))
-		{
-			error_log('Migration table is not set.');
-			exit(1);
-		}
-
-		$migrationClass = 'Migration_'.$file->getBasename('.php');
-
-		if (!class_exists($migrationClass))
-		{
-			continue;
-		}
-
-		if (!is_subclass_of($migrationClass, MigrationInterface::class))
-		{
-			error_log('Incorrect migration class in '.$file->getBasename());
-			continue;
-		}
-
-		echo $migrationClass.' : ';
-		$completed = Migration::status($migrationClass, $dbConnection);
+		echo $migration.' : ';
 
 		if ($completed instanceof \DateTime)
 		{
@@ -288,6 +327,7 @@ switch ($command)
 		error_log('init [migrationTable: '.$migrationTable.'] [migrationDirectory: '.$migrationDirectory.']');
 		error_log('create tableName [migrationDirectory: '.$migrationDirectory.']');
 		error_log('run [migrationDirectory: '.$migrationDirectory.']');
+		error_log('logOnly [migrationDirectory: '.$migrationDirectory.']');
 		error_log('status [migrationDirectory: '.$migrationDirectory.']');
 		error_log('dumpQueries [migrationDirectory: '.$migrationDirectory.']');
 		break;
@@ -327,6 +367,14 @@ switch ($command)
 		}
 
 		runMigrations($migrationDirectory);
+		break;
+	case 'logOnly':
+		if (!empty($argv[2]))
+		{
+			$migrationDirectory = $argv[2];
+		}
+
+		logMigrations($migrationDirectory);
 		break;
 	case 'dumpQueries':
 		if (!empty($argv[2]))
