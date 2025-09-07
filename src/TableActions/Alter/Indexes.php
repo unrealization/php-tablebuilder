@@ -26,7 +26,7 @@ trait Indexes
 		return $this->addIndex(new IndexAction($index, IndexAction::MODE_DROP));
 	}
 
-	public function dropPrimaryKey()
+	public function dropPrimaryKey(): self
 	{
 		return $this->addIndex(new IndexAction(new PrimaryKey(array()), IndexAction::MODE_DROP));
 	}
